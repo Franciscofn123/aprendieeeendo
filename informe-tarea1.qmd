@@ -1,0 +1,314 @@
+---
+title: "informe-tarea1-simulacion"
+author: "Francisco Fernández"
+format: html
+editor: visual
+---
+
+## Pregunta 1.
+
+a\) Se desea conocer el volumen bajo la siguiente superficie
+
+```{r}
+#| echo: false
+x<-seq(0,3,length=30)
+y<-seq(0,2,length=30)
+f<-function(x,y) x*y^2*sqrt(x^2+y^3)
+library(rgl)
+z<-outer(x, y,f)
+library(rgl)
+ecuacion <- expression(z == x*y^2*sqrt(x^2+y^3))
+persp(x,y,z,theta = 45, phi = 0, col = "orange",sub = ecuacion, main = "Grafico",
+      col.main="blue")
+        
+
+```
+
+b\) Para encontrar esta expresión es necesario hacer unos cambios de variable
+
+$$
+\theta=\int_0^3 \int_0^2 x \cdot y^2 \sqrt{x^2+y^3} d y d x
+$$
+
+$$
+y=2k \space \Longrightarrow dy=2dk\\
+$$
+
+$$
+x=3j \space \Longrightarrow dy=3dj\\
+$$
+
+Luego, remplazando se obtiene lo siguiente.
+
+$$
+\theta=\int_0^1 \int_0^1 3j \cdot (2k)^2 \sqrt{(3j)^2+(2k)^3} 2dk  3d j \\
+$$
+
+Simplificando se tiene la expresión final.
+
+$$
+\theta=\int_0^1 \int_0^1 72 \cdot j \cdot k^2 \cdot \sqrt{9 j^2+8 k^3} d k d j
+$$
+
+c\)
+
+```{r}
+
+#el codigo sirve para un n cualquiera, pero se le asigna un valor a n para que funcione el codigo.
+n <- 10000
+k <- runif(n,0,1)
+j <- runif(n,0,1)
+m <- NULL
+
+for (i in 1:n){
+  m[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
+}
+valor <- mean(m)
+valor
+
+
+
+```
+
+d\) el valor real de la integral es
+
+```{r}
+library(pracma)
+integral2(f,0,3,0,2,sector = FALSE)
+
+```
+
+si se compara el algoritmo usando distintos valores de n se tiene
+
+```{r}
+#con 10^2
+n <- 10^2
+k <- runif(n,0,1)
+j <- runif(n,0,1)
+m2 <- NULL
+
+for (i in 1:n){
+  m2[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
+}
+
+mean(m2)
+
+```
+
+```{r}
+#con 10^3
+n <- 10^3
+k <- runif(n,0,1)
+j <- runif(n,0,1)
+m3 <- NULL
+
+for (i in 1:n){
+  m3[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
+}
+
+mean(m3)
+```
+
+```{r}
+#con 10^4
+n <- 10^4
+k <- runif(n,0,1)
+j <- runif(n,0,1)
+m4 <- NULL
+
+for (i in 1:n){
+  m4[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
+}
+
+mean(m4)
+```
+
+Se puede apreciar que a medida que crece n, el valor estimado se acerca cada vez más al verdadero valor de la integral.
+
+## Pregunta 2.
+
+## Pregunta 3.
+
+se tiene la siguiente funcion de densidad
+
+![](images/paste-CE5060AB.png)
+
+a\)
+
+para calcular la funcion de distribucion es necesario integrar la funcion de densidad.
+
+para 2a\<x\<a+b
+
+$$
+F(x)=\int_{2 a}^x \frac{s-2 a}{(b-a)^2} d s=\left.\frac{1}{(b-a)^2}\left(\frac{s^2}{2}-2 a s\right)\right|_{2 a} ^x
+=\frac{1}{(b-a)^2}\left(\frac{x^2}{2}-2 a x-2 a^2+4 a^2\right)
+$$
+
+$$
+=\frac{x^2-4 a x+4 a^2}{2(b-a)^2}
+$$
+
+notar que F(a+b)=1/2
+
+ahora, para a+b\<x\<2b
+
+$$
+\int_{a+b}^x \frac{2 b-i}{(b-a)^2} d i=\left.\frac{1}{(b-a)^2}\left(2 b i-\frac{i^2}{2}\right)\right|_{a+b} ^x =\frac{1}{(b-a)^2}\left(2 b x-\frac{x^2}{2}-2 b(a+b)+\frac{(a+b)^2}{2}\right)
+$$
+
+$$
+=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}
+$$
+
+como paso final, se le adicona 1/2 para que el F tienda a 1 cuando x tiende a infinito
+
+luego, en a+b\<x\<2b
+
+$$
+F(x)=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}+1/2
+$$
+
+notar que F(2b)=1
+
+finalmente, se tiene la funcion de distribucion
+
+$$
+F(x)\left\{\begin{array}{l}
+0,\space x \leqslant 2 a \\
+\frac{4 a^2-4 a x+x^2}{2(b-a)^2},\space 2 a<x \leqslant a+b \\
+\frac{-3 b^2-2 a b+4 b x+a^2-x^2}{2(b-a)^2}+\frac{1}{2}, \space a+b<x
+\end{array}\right.
+$$
+
+b\)
+
+a cada rama, se iguala U=F(x) y se despeja x, como F(2a)=0 y F(a+b)=1/2, estos resultados son los limites de la primera rama
+
+para 0\<U\<=1/2
+
+$$
+\begin{aligned}
+& \frac{4 a^2-4 a x+x^2}{2(b-a)^2}=U \\
+\Rightarrow & x^2-4 a x+4 a^2-2 U(b-a)^2=0
+\end{aligned}
+$$
+
+mediante ecuacion cuadratica se tiene que
+
+$$
+\begin{aligned}
+x &=\frac{4 a \pm \sqrt{16 a^2-16 a^2+8 U(b-a)^2}}{2} \\
+&=\frac{4 a \pm \sqrt{8 U(b-a)^2}}{2} \\
+&=2 a \pm(b-a)^2 \sqrt{2U}
+\end{aligned}
+$$
+
+luego, se elige la raiz
+
+$$
+x=2 a+(b-a) \sqrt{2 U}
+$$
+
+ahora para la segunda rama, como F(a+b)=1/2 y F(2b)=1 , estos resultados seran los limites de la nueva ramificación.
+
+para 1/2\<U\<1
+
+$$
+\begin{aligned}
+U&=\frac{-3 b^2-2 a b+4 b x+a^2-x^2}{2(b-a)^2}+\frac{1}{2}\\
+&= \frac{-3 b^2-2 a b+4 b x+a^2-x^2+(b-a)^2}{2(b-a)^2} \\
+\end{aligned}
+$$
+
+$$
+\Longleftrightarrow
+-x^2+4 b x+a^2-2 a b-3 b^2+(b-a)^2-2U(b-a)^2=0
+$$
+
+usando nuevamente ecuacion cuadratica se tiene que
+
+$$
+\begin{aligned}
+x&=\frac{-4 b \pm \sqrt{16 b^2+4 a^2-8 a b-12 b^2+4(b-a)^2-8 U(b-a)^2}}{-2}\\
+&=2 b \pm \frac{\sqrt{8(b-a)^2-8U(b-a)^2}}{-2}\\
+&=2 b \pm \frac{\sqrt{8(b-a)^2(1-U)}}{-2}\\
+&=2 b \pm \frac{2(b-a) \sqrt{2(1-U)}}{-2}
+\end{aligned} 
+$$
+
+simplificando y seleccionando la raiz en la que hay una adicion se obtiene que
+
+$$
+x=2 b+(a-b) \sqrt{2(1-U)}
+$$
+
+luego, se muestra que la funcion inversa es tal cual como se muestra en el enunciado
+
+c\)
+
+**Pasos:**
+
+1.  crear un vector nulo
+
+2.  crear un vector de varibles aleatorias uniformes cuyo largo es la cantidad de variables X que se quiera obtener
+
+3.  para cada elemento del vector de variables uniformes se compara si es menor o mayor a 0.5
+
+4.  dependiendo la comparacion anterior, se evalua en una expresion de la transformación inversa
+
+5.  una ves evaluado en alguna expresion, se agrega el resultado al vector nulo del inicio, asi hasta comparar todos los elementos del vector de variables uniformes
+
+d\)
+
+```{r}
+n <- 1
+x <- c()
+b <- 5
+a <- 0
+u <- runif(n,0,1)
+for (i in 1:n){
+  if (u[i]<0.5){
+    x <- c(x,2*a+(b-a)*sqrt(2*u[i]))
+  }else{
+    x <- c(x,2*b+(a-b)*sqrt(2*(1-u[i])))
+  }
+}
+x
+```
+
+e\)
+
+```{r}
+n <- 10^4
+x <- c()
+b <- 5
+a <- 0
+u <- runif(n,0,1)
+for (i in 1:n){
+  if (u[i]<0.5){
+    x <- c(x,2*a+(b-a)*sqrt(2*u[i]))
+  }else{
+    x <- c(x,2*b+(a-b)*sqrt(2*(1-u[i])))
+  }
+}
+
+
+hist(x,freq=FALSE, col="darkgoldenrod1", ylim = c(0,0.2),xlab = "Valores",ylab = "Probabilidades", main = "Histograma de fecruencia relativa de X",
+      )
+legend(x = "topright",        
+       legend = c("f(x)"), 
+       lty = c(1),         
+       col = c("blue"),       
+       lwd = 2,
+       box.lty = 0)
+fe2 <- function(x){
+  return((x-2*a)/(b-a)^2)}
+
+fe3 <- function(x){
+  return((2*b-x)/(b-a)^2)
+}
+
+
+curve(fe2(x),from=0 ,to=5,add = TRUE, col= "blue", lwd = 3)
+curve(fe3(x),from=5 ,to=10,add = TRUE , col = "blue", lwd = 3)
+```

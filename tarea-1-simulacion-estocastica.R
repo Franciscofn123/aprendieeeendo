@@ -4,7 +4,6 @@
 #install.packages("rgl")
 x<-seq(0,3,length=30)
 y<-seq(0,2,length=30)
-
 f<-function(x,y) x*y^2*sqrt(x^2+y^3)
 library(rgl)
 z<-outer(x, y,f)
