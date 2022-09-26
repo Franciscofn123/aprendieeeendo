@@ -78,6 +78,53 @@ mean(m)
 #######################################################################################
 #2----
 
+#a
+#b
+
+n2 <- 10^3
+d <- c()
+est <- function(n2){
+u2 <- runif(n2,0,1)
+for(i in 1:n2){
+  x1 <- log(u2[i]/(1-u2[i]))
+  dx1 <- 1/(u2[i]*(1-u2[i]))
+  v <- exp(-x1^2/2)*(exp(-(x1-3)^2/2)+exp(-(x1-6)^2/2))*dx1/sqrt(2*pi)
+  d <- c(d,v)
+}
+return(mean(d))
+}
+#c
+p <- NULL
+error <- NULL
+for (i in 1:n2){
+  p[i] <- est(i)
+}
+real <- integrate(function(x) exp(-x^2/2)*(exp(-(x-3)^2/2)+exp(-(x-6)^2/2))/sqrt(2*pi) 
+                  , lower = -Inf, upper = Inf)
+
+real <- 0.074
+y <- c(seq(1,n2))
+plot(y,p,type = "l" )
+abline(h= 0.074 , col= "red", lwd=3)
+
+#debido a condiciones del computador en uso, solo se puede llegara 10^3 iteraciones, ya que con 10^4 se congela el dispositivo
+#cuando la muestra sube, la estimacion se acerca mas al valor real de la esperanza
+
+
+#d
+error <- NULL
+for (i in 1:n2){
+  error[i] <- abs(real-p[i])
+}
+
+plot(error, type = "l" , col="blue")
+
+#a medida que aumenta la muestra el error es cada vez menor
+
+
+
+
+
 ##########################################################################################
 #3----
 
