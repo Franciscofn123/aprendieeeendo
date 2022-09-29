@@ -1,5 +1,5 @@
 ---
-title: "informe-tarea1-simulacion"
+title: "Informe tarea 1 simulación estocastica"
 author: "Francisco Fernández"
 format: html
 editor: visual
@@ -209,6 +209,12 @@ plot(x, estimacion(n), type = "l", xlab = "Tamaño de muestra", ylab = "Valor de
      main = "Estimación de E[h(X)] cuando la muestra aumenta")
 
 abline(h= 0.074 , col= "red", lwd=3)
+legend(x = "topright",        
+       legend = c("y=0.074"), 
+       lty = c(1),         
+       col = c("red"),       
+       lwd = 2,
+       box.lty = 0)
 
 
 ```
@@ -341,7 +347,14 @@ $$
 
 Después, se muestra que la función inversa es igual a como se muestra en el enunciado
 
-![](images/expresion%20de%20x.jpg)
+$$
+$$
+x=\left\{\begin{array}{ll}
+2 a+(b-a) \sqrt{2 U}, & 0 \leq U<\frac{1}{2} \\
+2 b+(a-b) \sqrt{2(1-U)} & \frac{1}{2} \leq V<1
+\end{array}\right.
+$$
+$$
 
 c\)
 
