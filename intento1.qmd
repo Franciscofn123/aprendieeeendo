@@ -345,16 +345,7 @@ $$
 x=2 b+(a-b) \sqrt{2(1-U)}
 $$
 
-Después, se muestra que la función inversa es igual a como se muestra en el enunciado
-
-$$
-$$
-x=\left\{\begin{array}{ll}
-2 a+(b-a) \sqrt{2 U}, & 0 \leq U<\frac{1}{2} \\
-2 b+(a-b) \sqrt{2(1-U)} & \frac{1}{2} \leq V<1
-\end{array}\right.
-$$
-$$
+Después, se muestra que la función inversa es igual a como se muestra en el enunciado.
 
 c\)
 
