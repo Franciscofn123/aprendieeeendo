@@ -14,7 +14,7 @@ persp(x,y,z,theta = 30, phi = 30, col = "orange",sub = ecuacion, main = "grafico
         
 
 #1b----
-#esta en la tablet
+#esta en informe
 
 #1c----
 #crando funcion
@@ -79,43 +79,51 @@ mean(m)
 #2----
 
 #a
+
+#esta en informe
+
 #b
 
-n2 <- 10^3
-d <- c()
-est <- function(n2){
-u2 <- runif(n2,0,1)
-for(i in 1:n2){
-  x1 <- log(u2[i]/(1-u2[i]))
-  dx1 <- 1/(u2[i]*(1-u2[i]))
+
+v <- NULL
+montecarlo <- function(u){
+  x1 <- log(u/(1-u))
+  dx1 <- 1/(u*(1-u))
   v <- exp(-x1^2/2)*(exp(-(x1-3)^2/2)+exp(-(x1-6)^2/2))*dx1/sqrt(2*pi)
-  d <- c(d,v)
+  return(v)
 }
-return(mean(d))
+
+resultado<- NULL
+aprox <- function(n){
+  u <- runif(n,0,1)
+  resultado <- mean(montecarlo(u))
+  return(resultado)
 }
-#c
-p <- NULL
-error <- NULL
-for (i in 1:n2){
-  p[i] <- est(i)
+
+estimacion <- function(n) #Definimos la muestra.
+{ 
+  est <- NULL
+  for(i in 1:n)
+  {
+    est[i] <- aprox(i)
+  }
+  return(est)
 }
-real <- integrate(function(x) exp(-x^2/2)*(exp(-(x-3)^2/2)+exp(-(x-6)^2/2))/sqrt(2*pi) 
-                  , lower = -Inf, upper = Inf)
 
-real <- 0.074
-y <- c(seq(1,n2))
-plot(y,p,type = "l" )
-abline(h= 0.074 , col= "red", lwd=3)
+n <- 10^4
 
-#debido a condiciones del computador en uso, solo se puede llegara 10^3 iteraciones, ya que con 10^4 se congela el dispositivo
-#cuando la muestra sube, la estimacion se acerca mas al valor real de la esperanza
+x <- seq(1,n)
 
-
+#Graficamos la estimación
+plot(x, estimacion(n), type = "l", xlab = "Tamaño de muestra", ylab = "Valor de la estimación", 
+     main = "Estimación de E[h(X)]")
+abline(h=0.074, col="red", lwd=3)
 #d
-error <- NULL
-for (i in 1:n2){
-  error[i] <- abs(real-p[i])
-}
+n <- 10^4
+real <- rep(0.074,n)
+
+
+error <- abs(real-estimacion(n))
 
 plot(error, type = "l" , col="blue")
 
@@ -128,6 +136,26 @@ plot(error, type = "l" , col="blue")
 ##########################################################################################
 #3----
 
+# a,b y c estan en documento
+
+#d
+n <- 1
+x <- c()
+b <- 5
+a <- 0
+u <- runif(n,0,1)
+for (i in 1:n){
+  if (u[i]<0.5){
+    x <- c(x,2*a+(b-a)*sqrt(2*u[i]))
+  }else{
+    x <- c(x,2*b+(a-b)*sqrt(2*(1-u[i])))
+  }
+}
+x
+
+
+
+#e
 n <- 10^4
 x <- c()
 b <- 5
@@ -142,12 +170,14 @@ for (i in 1:n){
 }
 
 
-hist(x,freq=FALSE)
-fe1 <- function(x){
-  x <- rep(0,n)
-  return(0)
-}
-
+hist(x,freq=FALSE, col="darkgoldenrod1", ylim = c(0,0.2),xlab = "Valores",ylab = "Probabilidades", main = "Histograma de fecruencia relativa de X",
+)
+legend(x = "topright",        
+       legend = c("f(x)"), 
+       lty = c(1),         
+       col = c("blue"),       
+       lwd = 2,
+       box.lty = 0)
 fe2 <- function(x){
   return((x-2*a)/(b-a)^2)}
 
@@ -156,8 +186,32 @@ fe3 <- function(x){
 }
 
 
-curve(fe2(x),add = TRUE)
-curve(fe3(x),add = TRUE)
+curve(fe2(x),from=0 ,to=5,add = TRUE, col= "blue", lwd = 3)
+curve(fe3(x),from=5 ,to=10,add = TRUE , col = "blue", lwd = 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
