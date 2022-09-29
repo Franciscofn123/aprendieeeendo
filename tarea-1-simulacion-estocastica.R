@@ -170,7 +170,7 @@ for (i in 1:n){
 }
 
 
-hist(x,freq=FALSE, col="darkgoldenrod1", ylim = c(0,0.2),xlab = "Valores",ylab = "Probabilidades", main = "Histograma de fecruencia relativa de X",
+hist(x,freq=FALSE, col="darkgoldenrod1", ylim = c(0,0.2),xlab = "Valores",ylab = "Probabilidades", main = "Histograma de frecuencia relativa de X",
 )
 legend(x = "topright",        
        legend = c("f(x)"), 
