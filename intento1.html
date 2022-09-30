@@ -169,7 +169,7 @@ x=3j \space \Longrightarrow dy=3dj\\
 <p>d) El valor real de la integral es.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pracma)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">integral2</span>(f,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="at">sector =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">integral2</span>(f,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Q
 [1] 34.1137
@@ -184,7 +184,7 @@ $error
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fu</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 37.14057</code></pre>
+<pre><code>[1] 39.3516</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -192,7 +192,7 @@ $error
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">3</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fu</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 35.7278</code></pre>
+<pre><code>[1] 33.38649</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -200,10 +200,10 @@ $error
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fu</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 34.23867</code></pre>
+<pre><code>[1] 33.04788</code></pre>
 </div>
 </div>
-<p>Se puede apreciar que a medida que crece n, el valor estimado se acerca cada vez más al verdadero valor de la integral.</p>
+<p>Se puede apreciar que a medida que crece la muesta, el valor estimado se acerca cada vez más al verdadero valor de la integral.</p>
 </section>
 <section id="pregunta-2." class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-2.">Pregunta 2.</h2>
@@ -262,22 +262,23 @@ E(h(x))=\frac{1}{\sqrt{2\pi}}\left[e^{-\frac{9}{4}} \cdot \sqrt{\pi}+e^{-9} \cdo
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>x1<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>(<span class="fu">exp</span>(<span class="sc">-</span>(x1<span class="dv">-3</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>(x1<span class="dv">-6</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>))<span class="sc">*</span>dx1<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(v)</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>resultado<span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>aprox <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">runif</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  resultado <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">montecarlo</span>(u))</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(resultado)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>estimacion <span class="ot">&lt;-</span> <span class="cf">function</span>(n) <span class="co">#Definimos la muestra.</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>{ </span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  est <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    est[i] <span class="ot">&lt;-</span> <span class="fu">aprox</span>(i)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(est)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  resultado<span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">runif</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  resultado <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">montecarlo</span>(u))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(resultado)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#muestra</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>estimacion <span class="ot">&lt;-</span> <span class="cf">function</span>(n) </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>{ </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  est <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    est[i] <span class="ot">&lt;-</span> <span class="fu">aprox</span>(i)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(est)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>c)</p>
 <div class="cell">
@@ -300,7 +301,7 @@ E(h(x))=\frac{1}{\sqrt{2\pi}}\left[e^{-\frac{9}{4}} \cdot \sqrt{\pi}+e^{-9} \cdo
 <p><img src="intento1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Se puede apreciar que cuando la muestra sube, la estimación se acerca mas al valor real de la esperanza.</p>
+<p>Se puede apreciar que cuando la muestra sube, la estimación se acerca más al valor real de la esperanza.</p>
 <p>d)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
@@ -312,89 +313,89 @@ E(h(x))=\frac{1}{\sqrt{2\pi}}\left[e^{-\frac{9}{4}} \cdot \sqrt{\pi}+e^{-9} \cdo
 <p><img src="intento1_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Evidentemente, a medida que aumenta la muestra el error es cada vez menor.</p>
+<p>Evidentemente, a medida que aumenta la muestra, el error es cada vez menor.</p>
 </section>
 <section id="pregunta-3." class="level2">
 <h2 class="anchored" data-anchor-id="pregunta-3.">Pregunta 3.</h2>
 <p>a)</p>
 <p>Para calcular la función de distribución es necesario integrar la funcion de densidad.</p>
-<p>para 2a&lt;x&lt;a+b</p>
+<p>para 2a&lt;=x&lt;a+b</p>
 <p><span class="math display">\[
 F(x)=\int_{2 a}^x \frac{s-2 a}{(b-a)^2} d s=\left.\frac{1}{(b-a)^2}\left(\frac{s^2}{2}-2 a s\right)\right|_{2 a} ^x
 =\frac{1}{(b-a)^2}\left(\frac{x^2}{2}-2 a x-2 a^2+4 a^2\right)
 \]</span></p>
 <p><span class="math display">\[
-=\frac{x^2-4 a x+4 a^2}{2(b-a)^2}
+=\frac{x^2-4 a x+4 a^2}{2(b-a)^2} = \frac{(x-2a)^2}{2(b-a)^2}
 \]</span></p>
 <p>Notar que F(a+b)=1/2</p>
 <p>Ahora, para a+b&lt;x&lt;2b</p>
 <p><span class="math display">\[
-\int_{a+b}^x \frac{2 b-i}{(b-a)^2} d i=\left.\frac{1}{(b-a)^2}\left(2 b i-\frac{i^2}{2}\right)\right|_{a+b} ^x =\frac{1}{(b-a)^2}\left(2 b x-\frac{x^2}{2}-2 b(a+b)+\frac{(a+b)^2}{2}\right)
+F(x)\int_{2 a}^{a+b} f(s) d s+\int_{a+b}^x \frac{2 b-i}{(b-a)^2} d i
+\]</span></p>
+<p>notar que la primera integral es F(a+b)=1/2</p>
+<p><span class="math display">\[
+=\frac{1}{2}+\left.\frac{1}{(b-a)^2}\left(2 b i-\frac{i^2}{2}\right)\right|_{a+b} ^x =\frac{1}{(b-a)^2}\left(2 b x-\frac{x^2}{2}-2 b(a+b)+\frac{(a+b)^2}{2}\right)
 \]</span></p>
 <p><span class="math display">\[
-=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}
+=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}+\frac{1}{2} = \frac{1}{2(b-a)^{2}} \cdot\left((b-a)^{2}-(x-2 b)^{2}\right)+\frac{1}{2}
 \]</span></p>
-<p>Como paso final, se le adiciona 1/2, proveniente de F(a+b) para que F tienda a 1 cuando x tiende a infinito</p>
-<p>luego, en a+b&lt;x&lt;2b</p>
+<p>luego, en a+b&lt;x</p>
 <p><span class="math display">\[
-F(x)=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}+1/2
+F(x)=\frac{1}{2(b-a)^{2}} \cdot\left((b-a)^{2}-(x-2 b)^{2}\right)+\frac{1}{2}
 \]</span></p>
 <p>Notar que F(2b)=1</p>
 <p>Finalmente, se tiene la funcion de distribución</p>
 <p><span class="math display">\[
-F(x)\left\{\begin{array}{l}
+F(x)=\left\{\begin{array}{l}
 0,\space x \leqslant 2 a \\
-\frac{4 a^2-4 a x+x^2}{2(b-a)^2},\space 2 a&lt;x \leqslant a+b \\
-\frac{-3 b^2-2 a b+4 b x+a^2-x^2}{2(b-a)^2}+\frac{1}{2}, \space a+b&lt;x
+\frac{(x-2a)^2}{2(b-a)^2},\space 2 a&lt;x \leqslant a+b \\
+\frac{1}{2(b-a)^{2}} \cdot\left((b-a)^{2}-(x-2 b)^{2}\right)+\frac{1}{2}, \space a+b&lt;x\\
+1,\space 2b\leqslant x
 \end{array}\right.
 \]</span></p>
 <p>b)</p>
-<p>A cada ramificacion, se iguala U=F(x) y se despeja x, como F(2a)=0 y F(a+b)=1/2, estos resultados son los limites de la primera rama, puesto que en clases se vio que U=F(x)</p>
-<p>para 0&lt;U&lt;=1/2</p>
+<p>A cada ramificacion, se iguala U=F(x) y se despeja x.</p>
+<p>Analiticamente se tiene que</p>
+<p><span class="math display">\[
+x \in [2a,a+b)
+\]</span></p>
+<p><span class="math display">\[
+\Longrightarrow F(2a)\le U&lt; F(a+b)
+\]</span></p>
+<p><span class="math display">\[
+\Longrightarrow 0\le U&lt; \frac{1}{2}
+\]</span></p>
+<p>para 0&lt;=U&lt;1/2</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp; \frac{4 a^2-4 a x+x^2}{2(b-a)^2}=U \\
-\Rightarrow &amp; x^2-4 a x+4 a^2-2 U(b-a)^2=0
+&amp; \frac{(x-2 a)^{2}}{2(b-a)^{2}}=U \\
+\Rightarrow &amp;(x-2 a)^{2}=2(b-a)^{2} \cdot U \\
+\Rightarrow &amp;(x-2 a)=\sqrt{2 U(b-a)^{2}} \\
+\Rightarrow &amp; x=2 a+(b-a) \sqrt{2 U}
 \end{aligned}
 \]</span></p>
-<p>Mediante ecuación cuadratica se tiene que</p>
+<p>Ahora para la segunda ramificación, como F(a+b)=1/2 y F(2b)=1 , estos resultados seran los limites de la nueva rama ya que.</p>
+<p><span class="math display">\[
+x\in [a+b,2b)
+\]</span></p>
+<p><span class="math display">\[
+\Longrightarrow F(a+b)\le U&lt; F(2b)
+\]</span></p>
+<p><span class="math display">\[
+\Longrightarrow \frac{1}{2}\le U&lt; 1
+\]</span></p>
+<p>Para 1/2&lt;=U&lt;1</p>
 <p><span class="math display">\[
 \begin{aligned}
-x &amp;=\frac{4 a \pm \sqrt{16 a^2-16 a^2+8 U(b-a)^2}}{2} \\
-&amp;=\frac{4 a \pm \sqrt{8 U(b-a)^2}}{2} \\
-&amp;=2 a \pm(b-a)^2 \sqrt{2U}
+&amp; \frac{1}{2}+\frac{(b-a)^2-(x-2 b)^2}{2(b-a)^2}=U / \cdot 2(b-a)^2 \\
+\Rightarrow &amp;(b-a)^2+(b-a)^2-(x-2 b)^2=2 U(b-a)^2 \\
+\Rightarrow &amp;-(x-2 b)^2=2 U(b-a)^2-2(b-a)^2 /\cdot-1 \\
+\Rightarrow &amp;(x-2 b)^2=2(a-b)^2-2 U(b-a)^2 \\
+\Rightarrow &amp;(x-2 b)^2=2(a-b)^2(1-U) / \sqrt{ } \\
+\Rightarrow &amp; x=2 b+(a-b) \sqrt{2(1-U)}
 \end{aligned}
 \]</span></p>
-<p>Luego, se elige la raiz</p>
-<p><span class="math display">\[
-x=2 a+(b-a) \sqrt{2 U}
-\]</span></p>
-<p>Ahora para la segunda ramificación, como F(a+b)=1/2 y F(2b)=1 , estos resultados seran los limites de la nueva rama.</p>
-<p>Para 1/2&lt;U&lt;1</p>
-<p><span class="math display">\[
-\begin{aligned}
-U&amp;=\frac{-3 b^2-2 a b+4 b x+a^2-x^2}{2(b-a)^2}+\frac{1}{2}\\
-&amp;= \frac{-3 b^2-2 a b+4 b x+a^2-x^2+(b-a)^2}{2(b-a)^2} \\
-\end{aligned}
-\]</span></p>
-<p><span class="math display">\[
-\Longleftrightarrow
--x^2+4 b x+a^2-2 a b-3 b^2+(b-a)^2-2U(b-a)^2=0
-\]</span></p>
-<p>Usando nuevamente ecuación cuadratica se tiene que:</p>
-<p><span class="math display">\[
-\begin{aligned}
-x&amp;=\frac{-4 b \pm \sqrt{16 b^2+4 a^2-8 a b-12 b^2+4(b-a)^2-8 U(b-a)^2}}{-2}\\
-&amp;=2 b \pm \frac{\sqrt{8(b-a)^2-8U(b-a)^2}}{-2}\\
-&amp;=2 b \pm \frac{\sqrt{8(b-a)^2(1-U)}}{-2}\\
-&amp;=2 b \pm \frac{2(b-a) \sqrt{2(1-U)}}{-2}
-\end{aligned}
-\]</span></p>
-<p>Simplificando y seleccionando una raiz se obtiene que</p>
-<p><span class="math display">\[
-x=2 b+(a-b) \sqrt{2(1-U)}
-\]</span></p>
-<p>Después, se muestra que la función inversa es igual a como se muestra en el enunciado.</p>
+<p>Con esto, se muestra que la función inversa es igual a como se muestra en el enunciado.</p>
 <p>c)</p>
 <p><strong>Pasos:</strong></p>
 <ol type="1">
@@ -407,57 +408,46 @@ x=2 b+(a-b) \sqrt{2(1-U)}
 </ol>
 <p>d)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(n,a,b){</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(n,a,b){</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (u[i]<span class="sc">&lt;</span><span class="fl">0.5</span>){</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    c <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>a<span class="sc">+</span>(b<span class="sc">-</span>a)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>u[i])</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    c <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>b<span class="sc">+</span>(a<span class="sc">-</span>b)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>u[i]))</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> c</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">return</span>(x)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (u[i]<span class="sc">&lt;</span><span class="fl">0.5</span>){</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    c <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>a<span class="sc">+</span>(b<span class="sc">-</span>a)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>u[i])</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    c <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>b<span class="sc">+</span>(a<span class="sc">-</span>b)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>u[i]))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> c</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">return</span>(x)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>e)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="fu">runif</span>(n,<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n){</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (u[i]<span class="sc">&lt;</span><span class="fl">0.5</span>){</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    c <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>a<span class="sc">+</span>(b<span class="sc">-</span>a)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>u[i])</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    c <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>b<span class="sc">+</span>(a<span class="sc">-</span>b)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>u[i]))</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  x[i] <span class="ot">&lt;-</span> c</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x,<span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">col=</span><span class="st">"darkgoldenrod1"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.2</span>),<span class="at">xlab =</span> <span class="st">"Valores"</span>,<span class="at">ylab =</span> <span class="st">"Probabilidades"</span>, <span class="at">main =</span> <span class="st">"Histograma de frecuencia relativa de X"</span>,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topright"</span>,        </span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"f(x)"</span>), </span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>),         </span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>),       </span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">box.lty =</span> <span class="dv">0</span>)</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>fe2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((x<span class="dv">-2</span><span class="sc">*</span>a)<span class="sc">/</span>(b<span class="sc">-</span>a)<span class="sc">^</span><span class="dv">2</span>)}</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>fe3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((<span class="dv">2</span><span class="sc">*</span>b<span class="sc">-</span>x)<span class="sc">/</span>(b<span class="sc">-</span>a)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fe2</span>(x),<span class="at">from=</span><span class="dv">0</span> ,<span class="at">to=</span><span class="dv">5</span>,<span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col=</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fe3</span>(x),<span class="at">from=</span><span class="dv">5</span> ,<span class="at">to=</span><span class="dv">10</span>,<span class="at">add =</span> <span class="cn">TRUE</span> , <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">g</span>(n,a,b)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x,<span class="at">freq=</span><span class="cn">FALSE</span>, <span class="at">col=</span><span class="st">"darkgoldenrod1"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.2</span>),<span class="at">xlab =</span> <span class="st">"Valores"</span>,<span class="at">ylab =</span> <span class="st">"Probabilidades"</span>, <span class="at">main =</span> <span class="st">"Histograma de frecuencia relativa de X"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topright"</span>,        </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"f(x)"</span>), </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>),         </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>),       </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">box.lty =</span> <span class="dv">0</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>fe2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((x<span class="dv">-2</span><span class="sc">*</span>a)<span class="sc">/</span>(b<span class="sc">-</span>a)<span class="sc">^</span><span class="dv">2</span>)}</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>fe3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((<span class="dv">2</span><span class="sc">*</span>b<span class="sc">-</span>x)<span class="sc">/</span>(b<span class="sc">-</span>a)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fe2</span>(x),<span class="at">from=</span><span class="dv">0</span> ,<span class="at">to=</span><span class="dv">5</span>,<span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col=</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">fe3</span>(x),<span class="at">from=</span><span class="dv">5</span> ,<span class="at">to=</span><span class="dv">10</span>,<span class="at">add =</span> <span class="cn">TRUE</span> , <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="intento1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>

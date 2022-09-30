@@ -74,7 +74,7 @@ d\) El valor real de la integral es.
 
 ```{r}
 library(pracma)
-integral2(f,0,3,0,2,sector = FALSE)
+integral2(f,0,3,0,2)
 
 ```
 
@@ -98,7 +98,7 @@ n <- 10^4
 fu(n)
 ```
 
-Se puede apreciar que a medida que crece n, el valor estimado se acerca cada vez más al verdadero valor de la integral.
+Se puede apreciar que a medida que crece la muesta, el valor estimado se acerca cada vez más al verdadero valor de la integral.
 
 ## Pregunta 2.
 
@@ -177,14 +177,15 @@ montecarlo <- function(u){
   v <- exp(-x1^2/2)*(exp(-(x1-3)^2/2)+exp(-(x1-6)^2/2))*dx1/sqrt(2*pi)
   return(v)
 }
-resultado<- NULL
+
 aprox <- function(n){
+  resultado<- NULL
   u <- runif(n,0,1)
   resultado <- mean(montecarlo(u))
   return(resultado)
 }
-
-estimacion <- function(n) #Definimos la muestra.
+#muestra
+estimacion <- function(n) 
 { 
   est <- NULL
   for(i in 1:n)
@@ -219,7 +220,7 @@ legend(x = "topright",
 
 ```
 
-Se puede apreciar que cuando la muestra sube, la estimación se acerca mas al valor real de la esperanza.
+Se puede apreciar que cuando la muestra sube, la estimación se acerca más al valor real de la esperanza.
 
 d\)
 
@@ -232,7 +233,7 @@ plot(error, type = "l" , col="blue" ,xlab = "Tamaño de muestra", ylab = "Error"
 
 ```
 
-Evidentemente, a medida que aumenta la muestra el error es cada vez menor.
+Evidentemente, a medida que aumenta la muestra, el error es cada vez menor.
 
 ## Pregunta 3.
 
@@ -240,7 +241,7 @@ a\)
 
 Para calcular la función de distribución es necesario integrar la funcion de densidad.
 
-para 2a\<x\<a+b
+para 2a\<=x\<a+b
 
 $$
 F(x)=\int_{2 a}^x \frac{s-2 a}{(b-a)^2} d s=\left.\frac{1}{(b-a)^2}\left(\frac{s^2}{2}-2 a s\right)\right|_{2 a} ^x
@@ -248,7 +249,7 @@ F(x)=\int_{2 a}^x \frac{s-2 a}{(b-a)^2} d s=\left.\frac{1}{(b-a)^2}\left(\frac{s
 $$
 
 $$
-=\frac{x^2-4 a x+4 a^2}{2(b-a)^2}
+=\frac{x^2-4 a x+4 a^2}{2(b-a)^2} = \frac{(x-2a)^2}{2(b-a)^2}
 $$
 
 Notar que F(a+b)=1/2
@@ -256,19 +257,23 @@ Notar que F(a+b)=1/2
 Ahora, para a+b\<x\<2b
 
 $$
-\int_{a+b}^x \frac{2 b-i}{(b-a)^2} d i=\left.\frac{1}{(b-a)^2}\left(2 b i-\frac{i^2}{2}\right)\right|_{a+b} ^x =\frac{1}{(b-a)^2}\left(2 b x-\frac{x^2}{2}-2 b(a+b)+\frac{(a+b)^2}{2}\right)
+F(x)\int_{2 a}^{a+b} f(s) d s+\int_{a+b}^x \frac{2 b-i}{(b-a)^2} d i
+$$
+
+notar que la primera integral es F(a+b)=1/2
+
+$$
+=\frac{1}{2}+\left.\frac{1}{(b-a)^2}\left(2 b i-\frac{i^2}{2}\right)\right|_{a+b} ^x =\frac{1}{(b-a)^2}\left(2 b x-\frac{x^2}{2}-2 b(a+b)+\frac{(a+b)^2}{2}\right)
 $$
 
 $$
-=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}
+=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}+\frac{1}{2} = \frac{1}{2(b-a)^{2}} \cdot\left((b-a)^{2}-(x-2 b)^{2}\right)+\frac{1}{2}
 $$
 
-Como paso final, se le adiciona 1/2, proveniente de F(a+b) para que F tienda a 1 cuando x tiende a infinito
-
-luego, en a+b\<x\<2b
+luego, en a+b\<x
 
 $$
-F(x)=\frac{-x^2+a^2+4 b x-2 a b-3 b^2}{2(b-a)^2}+1/2
+F(x)=\frac{1}{2(b-a)^{2}} \cdot\left((b-a)^{2}-(x-2 b)^{2}\right)+\frac{1}{2}
 $$
 
 Notar que F(2b)=1
@@ -276,76 +281,71 @@ Notar que F(2b)=1
 Finalmente, se tiene la funcion de distribución
 
 $$
-F(x)\left\{\begin{array}{l}
+F(x)=\left\{\begin{array}{l}
 0,\space x \leqslant 2 a \\
-\frac{4 a^2-4 a x+x^2}{2(b-a)^2},\space 2 a<x \leqslant a+b \\
-\frac{-3 b^2-2 a b+4 b x+a^2-x^2}{2(b-a)^2}+\frac{1}{2}, \space a+b<x
+\frac{(x-2a)^2}{2(b-a)^2},\space 2 a<x \leqslant a+b \\
+\frac{1}{2(b-a)^{2}} \cdot\left((b-a)^{2}-(x-2 b)^{2}\right)+\frac{1}{2}, \space a+b<x\\
+1,\space 2b\leqslant x
 \end{array}\right.
 $$
 
 b\)
 
-A cada ramificacion, se iguala U=F(x) y se despeja x, como F(2a)=0 y F(a+b)=1/2, estos resultados son los limites de la primera rama, puesto que en clases se vio que U=F(x)
+A cada ramificacion, se iguala U=F(x) y se despeja x.
 
-para 0\<U\<=1/2
+Analiticamente se tiene que
+
+$$
+x \in [2a,a+b)
+$$
+
+$$
+\Longrightarrow F(2a)\le U< F(a+b)
+$$
+
+$$
+\Longrightarrow 0\le U< \frac{1}{2}
+$$
+
+para 0\<=U\<1/2
 
 $$
 \begin{aligned}
-& \frac{4 a^2-4 a x+x^2}{2(b-a)^2}=U \\
-\Rightarrow & x^2-4 a x+4 a^2-2 U(b-a)^2=0
+& \frac{(x-2 a)^{2}}{2(b-a)^{2}}=U \\
+\Rightarrow &(x-2 a)^{2}=2(b-a)^{2} \cdot U \\
+\Rightarrow &(x-2 a)=\sqrt{2 U(b-a)^{2}} \\
+\Rightarrow & x=2 a+(b-a) \sqrt{2 U}
 \end{aligned}
 $$
 
-Mediante ecuación cuadratica se tiene que
+Ahora para la segunda ramificación, como F(a+b)=1/2 y F(2b)=1 , estos resultados seran los limites de la nueva rama ya que.
+
+$$
+x\in [a+b,2b)
+$$
+
+$$
+\Longrightarrow F(a+b)\le U< F(2b)
+$$
+
+$$
+\Longrightarrow \frac{1}{2}\le U< 1
+$$
+
+Para 1/2\<=U\<1
 
 $$
 \begin{aligned}
-x &=\frac{4 a \pm \sqrt{16 a^2-16 a^2+8 U(b-a)^2}}{2} \\
-&=\frac{4 a \pm \sqrt{8 U(b-a)^2}}{2} \\
-&=2 a \pm(b-a)^2 \sqrt{2U}
+& \frac{1}{2}+\frac{(b-a)^2-(x-2 b)^2}{2(b-a)^2}=U / \cdot 2(b-a)^2 \\
+\Rightarrow &(b-a)^2+(b-a)^2-(x-2 b)^2=2 U(b-a)^2 \\
+\Rightarrow &-(x-2 b)^2=2 U(b-a)^2-2(b-a)^2 /\cdot-1 \\
+\Rightarrow &(x-2 b)^2=2(a-b)^2-2 U(b-a)^2 \\
+\Rightarrow &(x-2 b)^2=2(a-b)^2(1-U) / \sqrt{ } \\
+\Rightarrow & x=2 b+(a-b) \sqrt{2(1-U)}
 \end{aligned}
 $$
 
-Luego, se elige la raiz
-
-$$
-x=2 a+(b-a) \sqrt{2 U}
-$$
-
-Ahora para la segunda ramificación, como F(a+b)=1/2 y F(2b)=1 , estos resultados seran los limites de la nueva rama.
-
-Para 1/2\<U\<1
-
-$$
-\begin{aligned}
-U&=\frac{-3 b^2-2 a b+4 b x+a^2-x^2}{2(b-a)^2}+\frac{1}{2}\\
-&= \frac{-3 b^2-2 a b+4 b x+a^2-x^2+(b-a)^2}{2(b-a)^2} \\
-\end{aligned}
-$$
-
-$$
-\Longleftrightarrow
--x^2+4 b x+a^2-2 a b-3 b^2+(b-a)^2-2U(b-a)^2=0
-$$
-
-Usando nuevamente ecuación cuadratica se tiene que:
-
-$$
-\begin{aligned}
-x&=\frac{-4 b \pm \sqrt{16 b^2+4 a^2-8 a b-12 b^2+4(b-a)^2-8 U(b-a)^2}}{-2}\\
-&=2 b \pm \frac{\sqrt{8(b-a)^2-8U(b-a)^2}}{-2}\\
-&=2 b \pm \frac{\sqrt{8(b-a)^2(1-U)}}{-2}\\
-&=2 b \pm \frac{2(b-a) \sqrt{2(1-U)}}{-2}
-\end{aligned} 
-$$
-
-Simplificando y seleccionando una raiz se obtiene que
-
-$$
-x=2 b+(a-b) \sqrt{2(1-U)}
-$$
-
-Después, se muestra que la función inversa es igual a como se muestra en el enunciado.
+Con esto, se muestra que la función inversa es igual a como se muestra en el enunciado.
 
 c\)
 
@@ -367,11 +367,11 @@ d\)
 
 ```{r}
 
-x <- NULL
-n <- 1
-u <- runif(n,0,1)
-c <- 0
+
+
 g <- function(n,a,b){
+  x <- NULL
+u <- runif(n,0,1)
 for (i in 1:n){
   if (u[i]<0.5){
     c <- 2*a+(b-a)*sqrt(2*u[i])
@@ -388,18 +388,9 @@ e\)
 
 ```{r}
 n <- 10^4
-x <- c()
 b <- 5
 a <- 0
-u <- runif(n,0,1)
-for (i in 1:n){
-  if (u[i]<0.5){
-    c <- 2*a+(b-a)*sqrt(2*u[i])
-  }else{
-    c <- 2*b+(a-b)*sqrt(2*(1-u[i]))
-  }
-  x[i] <- c
-}
+x <- g(n,a,b)
 
 
 hist(x,freq=FALSE, col="darkgoldenrod1", ylim = c(0,0.2),xlab = "Valores",ylab = "Probabilidades", main = "Histograma de frecuencia relativa de X",
