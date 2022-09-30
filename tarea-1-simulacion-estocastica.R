@@ -9,8 +9,9 @@ library(rgl)
 z<-outer(x, y,f)
 library(rgl)
 ecuacion <- expression(z == x*y^2*sqrt(x^2+y^3))
-persp(x,y,z,theta = 30, phi = 30, col = "orange",sub = ecuacion, main = "grafico",
+persp(x,y,z,theta = 45, phi = 0, col = "orange",sub = ecuacion, main = "Gráfico de la expresión",
       col.main="blue")
+
         
 
 #1b----
@@ -18,56 +19,37 @@ persp(x,y,z,theta = 30, phi = 30, col = "orange",sub = ecuacion, main = "grafico
 
 #1c----
 #crando funcion
-n <- 100000
-k <- runif(n,0,1)
-j <- runif(n,0,1)
-m <- NULL
-
-for (i in 1:n){
-  m[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
+fu <- function(n){
+  k <- runif(n,0,1)
+  j <- runif(n,0,1)
+  m <- NULL
+  
+  for (i in 1:n){
+    m[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
+  }
+  valor <- mean(m)
+  return(valor)
+  
 }
 
-mean(m)
-
 #install.packages("pracma")
+#1d----
 library(pracma)
 integral2(f,0,3,0,2,sector = FALSE)
 
 #con 10^2
 n <- 10^2
-k <- runif(n,0,1)
-j <- runif(n,0,1)
-m <- NULL
-
-for (i in 1:n){
-  m[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
-}
-
-mean(m)
+fu(n)
 
 #con 10^3
 n <- 10^3
-k <- runif(n,0,1)
-j <- runif(n,0,1)
-m <- NULL
+fu(n)
 
-for (i in 1:n){
-  m[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
-}
 
-mean(m)
 
 #con 10^4
 n <- 10^4
-k <- runif(n,0,1)
-j <- runif(n,0,1)
-m <- NULL
-
-for (i in 1:n){
-  m[i] <-72*(k[i])^(2)*j[i]*sqrt((3*j[i])^2+(2*k[i])^3) 
-}
-
-mean(m)
+fu(n)
 
 
 #a medida que se se usan mas variables uniformes mejora la aproximación
@@ -78,12 +60,11 @@ mean(m)
 #######################################################################################
 #2----
 
-#a
+#2a
 
 #esta en informe
 
-#b
-
+#2b
 
 v <- NULL
 montecarlo <- function(u){
@@ -93,14 +74,14 @@ montecarlo <- function(u){
   return(v)
 }
 
-resultado<- NULL
 aprox <- function(n){
+  resultado<- NULL
   u <- runif(n,0,1)
   resultado <- mean(montecarlo(u))
   return(resultado)
 }
-
-estimacion <- function(n) #Definimos la muestra.
+#muestra
+estimacion <- function(n) 
 { 
   est <- NULL
   for(i in 1:n)
@@ -110,22 +91,30 @@ estimacion <- function(n) #Definimos la muestra.
   return(est)
 }
 
+#2c
+
 n <- 10^4
 
 x <- seq(1,n)
 
-#Graficamos la estimación
+#Se grafica como se aproxima la estimacion dependiendo de la muestra
 plot(x, estimacion(n), type = "l", xlab = "Tamaño de muestra", ylab = "Valor de la estimación", 
-     main = "Estimación de E[h(X)]")
-abline(h=0.074, col="red", lwd=3)
-#d
+     main = "Estimación de E[h(X)] cuando la muestra aumenta")
+
+abline(h= 0.074 , col= "red", lwd=3)
+legend(x = "topright",        
+       legend = c("y=0.074"), 
+       lty = c(1),         
+       col = c("red"),       
+       lwd = 2,
+       box.lty = 0)
+
+#2d
 n <- 10^4
 real <- rep(0.074,n)
-
-
 error <- abs(real-estimacion(n))
-
-plot(error, type = "l" , col="blue")
+plot(error, type = "l" , col="blue" ,xlab = "Tamaño de muestra", ylab = "Error", 
+     main = "Valor del error cuando aumenta la muestra")
 
 #a medida que aumenta la muestra el error es cada vez menor
 
@@ -138,36 +127,27 @@ plot(error, type = "l" , col="blue")
 
 # a,b y c estan en documento
 
-#d
-n <- 1
-x <- c()
-b <- 5
-a <- 0
-u <- runif(n,0,1)
-for (i in 1:n){
-  if (u[i]<0.5){
-    x <- c(x,2*a+(b-a)*sqrt(2*u[i]))
-  }else{
-    x <- c(x,2*b+(a-b)*sqrt(2*(1-u[i])))
+#3d
+g <- function(n,a,b){
+  x <- NULL
+  u <- runif(n,0,1)
+  for (i in 1:n){
+    if (u[i]<0.5){
+      c <- 2*a+(b-a)*sqrt(2*u[i])
+    }else{
+      c <- 2*b+(a-b)*sqrt(2*(1-u[i]))
+    }
+    x[i] <- c
   }
+  return(x)
 }
-x
-
 
 
 #e
 n <- 10^4
-x <- c()
 b <- 5
 a <- 0
-u <- runif(n,0,1)
-for (i in 1:n){
-  if (u[i]<0.5){
-    x <- c(x,2*a+(b-a)*sqrt(2*u[i]))
-  }else{
-    x <- c(x,2*b+(a-b)*sqrt(2*(1-u[i])))
-  }
-}
+x <- g(n,a,b)
 
 
 hist(x,freq=FALSE, col="darkgoldenrod1", ylim = c(0,0.2),xlab = "Valores",ylab = "Probabilidades", main = "Histograma de frecuencia relativa de X",
@@ -188,8 +168,6 @@ fe3 <- function(x){
 
 curve(fe2(x),from=0 ,to=5,add = TRUE, col= "blue", lwd = 3)
 curve(fe3(x),from=5 ,to=10,add = TRUE , col = "blue", lwd = 3)
-
-
 
 
 
