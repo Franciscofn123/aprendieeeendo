@@ -374,7 +374,12 @@ f4 <- function(x,p1){
 
 par(mfrow=c(1,3))
 
-c
+hist(l1, probability = T,ylim=c(0,0.12),breaks = 40, col = "lightblue1")
+curve(f4(x,0) ,add = T, lwd=2)
+hist(l2, probability = T,ylim=c(0,0.12), breaks = 50, col = "lightblue1")
+curve(f4(x,0.5),add = T, lwd=2)
+hist(l3, probability = T,ylim=c(0,0.25), breaks = 40, col = "lightblue1")
+curve(f4(x,1) ,add = T, lwd=2)
 
 ```
 
