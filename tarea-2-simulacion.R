@@ -61,10 +61,6 @@ acept_rech <- function(n,c){
     
   }
   tasa_a <- aceptados/(aceptados+rechazados)
-  
-  
-  
-  
   return(list(muestra=simulaciones,tasa_aprobacion=tasa_a))
   
 }
@@ -312,16 +308,9 @@ acept_rech2 <- function(n,c1){
     
   }
   tasa_a <- aceptados/(aceptados+rechazados)
-  
-  
-  
-  
   return(list(muestra=simulaciones,tasa_aprobacion=tasa_a))
   
 }
-t <- acept_rech2(10000,c1)
-hist(t$muestra,probability = T,ylim=c(0,0.12),breaks = 40)
-curve(dgamma(x,shape=10,rate =0.7),add = T)
 # la funcion acept_rech2 entrega una simulacion de la distribucion gamma(10, 0.7)
 
 
@@ -360,12 +349,12 @@ f4 <- function(x,p1){
 
 par(mfrow=c(1,3))
 
-hist(l1, probability = T,ylim=c(0,0.12),breaks = 40)
-curve(f4(x,0) ,add = T)
-hist(l2, probability = T,ylim=c(0,0.12), breaks = 60)
-curve(f4(x,0.5),add = T)
-hist(l3, probability = T,ylim=c(0,0.25), breaks = 40)
-curve(f4(x,1) ,add = T)
+hist(l1, probability = T,ylim=c(0,0.12),breaks = 40, col = "lightblue1")
+curve(f4(x,0) ,add = T, lwd=2)
+hist(l2, probability = T,ylim=c(0,0.12), breaks = 50, col = "lightblue1")
+curve(f4(x,0.5),add = T, lwd=2)
+hist(l3, probability = T,ylim=c(0,0.25), breaks = 40, col = "lightblue1")
+curve(f4(x,1) ,add = T, lwd=2)
 
 
 
@@ -394,16 +383,16 @@ composicion2 <- function(N,p1){
 par(mfrow=c(1,3))
 
 hist(composicion2(100000,0), probability=T, breaks=40, col="#00FFFF")
-curve(f2(x,0) ,add = T)
+curve(f4(x,0) ,add = T, lwd=2)
 
-hist(composicion2(100000,0.5), probability=T, breaks=80, col="#00FFFF")
-curve(f2(x,0.5) ,add = T)
-
+hist(composicion2(100000,0.5), probability=T, breaks=50, col="#00FFFF")
+curve(f4(x,0.5) ,add = T, lwd=2)
 
 hist(composicion2(100000,1), probability=T, breaks = 40, col="#00FFFF")
-curve(f2(x,1) ,add = T)
+curve(f4(x,1) ,add = T, lwd=2)
 
-#las aproximaciones son mas exactas
+
+#las aproximaciones son mas exactas con este metodo que con el anterior
 
 
 

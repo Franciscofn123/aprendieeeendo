@@ -22,7 +22,7 @@ b\)
 
 Se propone como distibucion generadora de candidatos la gamma(3/2,1).
 
-Se definen las funciones g y h para encontrar el valor de c
+Se definen las funciones g y h para encontrar el valor de c.
 
 ```{r}
 g <- function(x){
@@ -39,7 +39,7 @@ c <- h(max$maximum)
 c
 ```
 
-El valor de c es aproximadamente 2,529
+El valor de c es aproximadamente 2,529.
 
 c\)
 
@@ -54,7 +54,7 @@ legend("topright", legend = c("f(x)","g(x)", "c*g(x)"), fill = c("black", "red",
 
 d\)
 
-Se usan dos funciones aparte para crear la ultima funcion que entrega lo pedido
+Se usan dos funciones aparte para crear la ultima función que entrega lo pedido.
 
 ```{r}
 #funcion que simula distribucion usando el metodo aceptacion-rechazo
@@ -77,12 +77,7 @@ acept_rech <- function(n,c){
     
   }
   tasa_a <- aceptados/(aceptados+rechazados)
-  
-  
-  
-  
   return(list(muestra=simulaciones,tasa_aprobacion=tasa_a))
-  
 }
 
 
@@ -148,7 +143,7 @@ curve(dnorm(x,1,sqrt(1/2)) ,add = T, col="blue")
 
 b\)
 
-se realiza la funcion usando el metodo polar, entrega una distribucion normal estandar
+Se realiza la funcion usando el metodo polar, entrega una distribucion normal estandar
 
 ```{r}
 #esta funcion entrega una distribucion normal(0,1)
@@ -286,7 +281,7 @@ curve(f2 ,add = T, lwd=2)
 
 f\)
 
-Se puede apreciar que usando el metodo polar el histograma se asemeja mas a la funcion f ocupando una menor muestra, en otras palabras, el metodo polar es mas estable que la transformacion box-muller.
+Se puede apreciar que usando el metodo polar el histograma se asemeja más a la funcion f ocupando una muestra más pequeña, en otras palabras, el metodo polar es mas estable que la transformacion box-muller. Esto se debe a que en el metodo polar no es necesario calcular funciones trigonometricas, por lo tanto es menos costoso computacionalmente.
 
 ## Pregunta 3
 
@@ -340,12 +335,7 @@ acept_rech2 <- function(n,c1){
     
   }
   tasa_a <- aceptados/(aceptados+rechazados)
-  
-  
-  
-  
   return(list(muestra=simulaciones,tasa_aprobacion=tasa_a))
-  
 }
 
 #la siguiente funcion entrega una muestra ocupando metodo de composicion
@@ -384,13 +374,7 @@ f4 <- function(x,p1){
 
 par(mfrow=c(1,3))
 
-hist(l1, probability = T,ylim=c(0,0.12),breaks = 40, col = "lightblue1")
-curve(f4(x,0) ,add = T, lwd=2)
-hist(l2, probability = T,ylim=c(0,0.12), breaks = 50, col = "lightblue1")
-curve(f4(x,0.5),add = T, lwd=2)
-hist(l3, probability = T,ylim=c(0,0.25), breaks = 40, col = "lightblue1")
-curve(f4(x,1) ,add = T, lwd=2)
-
+c
 
 ```
 
@@ -428,3 +412,5 @@ curve(f4(x,1) ,add = T, lwd=2)
 
 
 ```
+
+Se puede ver que las aproximaciones son más exactas con las funciones de R que con las funciones creadas
