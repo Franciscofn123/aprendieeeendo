@@ -158,7 +158,7 @@ t12_1 <- Sys.time()
 lista_res3 <- acept_rech(10000, me3)$muestra
 t12_2 <- Sys.time()
 muestra3 <- lista_res3
-(t8_2-t8_1)
+(t12_2-t12_1)
 
 ```
 
