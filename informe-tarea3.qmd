@@ -1,21 +1,46 @@
-#######tarea 3
+---
+title: "Tarea 3"
+author: "Francisco Fernández"
+format: html
+editor: visual
+---
 
+## Pregunta 1
 
-#1
-#a
-#se definen la posteriori en el informe
+a\)
 
-#b
+Verosimilitud
+
+$$
+\prod_{i=1}^{n}f(x_{i}|\alpha,\beta) = \prod_{i=1}^{n}\frac{1}{\sigma} \cdot
+\frac{e^{(x_{i}-\alpha)/\beta}}{(1+e^{(x_{i}-\alpha)/\beta})^{2}}
+= \left(\frac{1}{\sigma}\right)^n \cdot \frac{e^{\left(\sum_{i=1}^n x_i-n \alpha\right) / \beta}}{\left(\prod_{i=1}^n\left(1+e^{\left.(x_i-\alpha\right) / \beta}\right)^2\right.}
+$$
+
+Priori
+
+$$
+\pi(\alpha ,\beta)= exp(\frac{-1}{2}(x-\mu)^{T} \cdot \Sigma^{-1} \cdot(x-\mu)) =
+exp(-\frac{1}{2}(x-\mu)^{T}\left(\begin{array}{cc}3 / 2 & -1 / 2 \\ -1 / 2 & 1 / 2\end{array}\right)(x-\mu))
+$$
+
+Posteriori
+
+$$
+f(\alpha,\beta|x)= \left(\frac{1}{\sigma}\right)^n \cdot \frac{e^{\left(\sum_{i=1}^n x_i-n \alpha\right) / \beta}}{\left(\prod_{i=1}^n\left(1+e^{\left.(x_i-\alpha\right) / \beta}\right)^2\right.} \cdot exp\left(-\frac{1}{2}(x-\mu)^{T}\left(\begin{array}{cc}3 / 2 & -1 / 2 \\ -1 / 2 & 1 / 2\end{array}\right)(x-\mu)\right)
+$$
+
+b\)
+
+```{r}
 set.seed(2022)
 x <- rlogis(n = 20, location = 5, scale =6)
-#como location=5, entonces la media es 5
-# y como scale=6, entonces la desviacion estandar es 6
+```
 
+c\)
 
+```{r}
 n <- 20
-
-#c
-
 l <- function(alpha,beta){
   y <- sum(log(dlogis(x, alpha, beta)))
   return(y)
@@ -28,15 +53,16 @@ f_aux <- function(c0)
 c0 <- c(1,1)
 minimo <- optim(c0, f_aux, hessian = T)
 
-x_opt <- minimo$par
-H_opt <- -minimo$hessian
-
-#d
+(x_opt <- minimo$par)
+(H_opt <- -minimo$hessian)
 
 
+```
+
+d\)
+
+```{r}
 library(mvtnorm)
-
-
 acept_rech <- function(n, me)
 {
   m <- matrix(c(me[1], me[2]), nrow = 2)
@@ -46,11 +72,15 @@ acept_rech <- function(n, me)
   mu <- S %*% (solve(V) %*% m - H_opt %*% (x_opt / 2))
   f <- function(alpha, beta)
   {
+   
     return(exp(l(alpha, beta)) * dmvnorm(c(alpha, beta), m, V))
   }
   
+  
+
   g <- function(alpha, beta)
   {
+  
     return(dmvnorm(c(alpha, beta), mu, S))
   }
   
@@ -84,24 +114,24 @@ acept_rech <- function(n, me)
     }
   }
   
-  #Calculamos la tasa de aprobación
+  
   tasa_aceptados <- aceptados / (aceptados + rechazados)
   
-  #Lo pasamos a porcentaje
+
   porceentaje_aceptados <- paste0(round(tasa_aceptados * 100, 2), "%")
   
-  #Mostramos el porcentaje de aceptados:
+
   print(sprintf("La tasa de aprobación fue de: %s", porceentaje_aceptados))
   
-  #Retornamos la lista pedida
+
   return(list(muestra = simulaciones, tasa_aprobacion = tasa_aceptados))
 }
 
+```
 
+e\)
 
-
-
-#e
+```{r}
 #con mu=(8,8)
 me1 <- matrix(c(8,8), nrow = 2)
 t8_1 <- Sys.time()
@@ -130,8 +160,14 @@ t12_2 <- Sys.time()
 muestra3 <- lista_res3
 (t8_2-t8_1)
 
-#f
-par(mfrow=c(2,2))
+```
+
+Se puede decir que mientras mayores sean los elementos de la media, mayor será el tiempo de ejecución y que a mayor tasa de aceptacion, menor será el tiempo de ejecución.
+
+f\)
+
+```{r}
+par(mfrow=c(2,2), mar=c(2,2,2,2))
 hist(muestra1,
      main="Muestra con u= (8,8)",
      ylim = c(0,0.4),
@@ -162,16 +198,19 @@ hist(muestra3,
      breaks=30,
      col="green")
 
-#2----
-#a
+```
 
+Se puede notar que los graficos estan medianamente centrados a la media, y todos son ligeramente asimetricos
+
+## Pregunta 2
+
+a\)
+
+```{r}
 theta <- function(x){
   aux <- x/(1+exp(x)) 
   return(aux)
 }
-
-
-
 
 cambio_variable <- function(x){
   aux <- (25*x+25)/(1+exp(5*x+5))
@@ -180,13 +219,17 @@ cambio_variable <- function(x){
 
 a <- runif(10000)
 monte <- mean(cambio_variable(a))
+```
 
+b\)
 
-#b
+```{r}
 v <- integrate(theta,5,10)$value
+```
 
-#c
+c\)
 
+```{r}
 
 fy <- function(y){
   return(exp(-1/2) / (1 + y^2))
@@ -232,16 +275,26 @@ r_z <- 100*cor(X,Z)^2
 #con z se reduce mucho mas la varianza, puesto que, esta muy correlacionada con X
 
 
+```
 
-#d
+d\)
 
+```{r}
 (error_monte <- 100 * abs(monte - v) / v)
 (error_y <- 100 * abs(est_y - v) / v)
 (error_z <- 100 * abs(est_z - v) / v)
 
+```
 
+se puede ver que el metodo con menor error relativo es el metodo montecarlo, mientras que el mayor, es usando la variable de control Z
 
-#f
+e\)
+
+La profesora mencionó que este item es igual que la c, por lo que da lo mismo cual haciamos
+
+f\)
+
+```{r}
 m <- NULL
 
 for (i in 1:1000){
@@ -249,7 +302,7 @@ for (i in 1:1000){
   monte <- mean(cambio_variable(a))
   m[i] <- monte
 }
-m
+
 
 q <- NULL
 
@@ -266,7 +319,7 @@ for (i in 1:1000){
   (est_y <- mean(z1)) 
   q[i] <- est_y
 }
-q
+
 
 p <- NULL
 for (i in 1:1000){
@@ -282,13 +335,10 @@ for (i in 1:1000){
   (est_z <- mean(z2)) 
   p[i] <- est_z
 }
-p
-
-
 par(mfrow=c(2,1))
 plot(m, type = "l", col = "skyblue", lwd = 4,
      xlab = "Cantidad de estimaciones", ylab = "Valores theta",
-     main = "Monte Carlo vs Variable de Control")
+     main = "Monte Carlo vs Variable de Control Y")
 
 # Agregamos a la figura las estimaciones de theta utilizando la variable de control
 lines(q, type = "l", lwd = 3, col = "gold")
@@ -297,17 +347,19 @@ legend("topright", legend = c("Monte Carlo", "Variable de Control Y"),
        col = c("skyblue", "gold"), lwd = 4:3, lty = 1:1, cex = 0.7)
 plot(m, type = "l", col = "skyblue", lwd = 4,
      xlab = "Cantidad de estimaciones", ylab = "Valores theta",
-     main = "Monte Carlo vs Variable de Control")
+     main = "Monte Carlo vs Variable de Control Z")
 lines(p, type = "l", lwd = 3, col = "lightsalmon1")
-legend("topright", legend = c("Monte Carlo", "Variable de Control Y"),
+legend("topright", legend = c("Monte Carlo", "Variable de Control Z"),
        col = c("skyblue", "lightsalmon1"), lwd = 4:3, lty = 1:1, cex = 0.7)
+```
 
+Observando los graficos se puede ver que el metodo montecarlo es el de mayor varianza, mientras que los otros restantes tienen un varianza muy parecida, que seria dificil decidir cual de los dos es mejor
 
+## Pregunta 3
 
+a\)
 
-#3
-
-#a
+```{r}
 f<-function(D,x){
   aux<- (2*pi)^(-D/2)*exp(-sum((x)^2)/2)
   return(aux)
@@ -324,10 +376,11 @@ valores <- function(n,D){
               coef_variacion = sd(mu) / mean(mu)))
   
 }
+```
 
+b\)
 
-#b
-
+```{r}
 estimacion1<-valores(1000,1)
 estimacion1$estimacion
 
@@ -358,10 +411,11 @@ estimacion9$estimacion
 estimacion10<-valores(10000,1)
 estimacion10$estimacion
 
+```
 
+c\)
 
-
-#c
+```{r}
 t<-seq(1000,10000,1000)
 estimaciones<-c(estimacion1$estimacion,estimacion2$estimacion,estimacion3$estimacion,estimacion4$estimacion,estimacion5$estimacion,estimacion6$estimacion,estimacion7$estimacion,estimacion8$estimacion,estimacion9$estimacion,estimacion10$estimacion)
 
@@ -372,47 +426,4 @@ desviacion_estandar<-c(estimacion1$desv ,estimacion2$desv, estimacion3$desv, est
 coeficiente_de_variacion<-c(estimacion1$coef_variacion, estimacion2$coef_variacion, estimacion3$coef_variacion, estimacion4$coef_variacion, estimacion5$coef_variacion ,estimacion6$coef_variacion, estimacion7$coef_variacion, estimacion8$coef_variacion, estimacion9$coef_variacion, estimacion10$coef_variacion)
                             
 cbind(t,estimaciones,desviacion_estandar,coeficiente_de_variacion)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
